@@ -73,7 +73,7 @@ class PostForm extends Component {
               type="text"
               name="title"
               onChange={this.onChange}
-              value={this.props.item}
+              value={this.props.newPost.title}
             />
           </div>
           <br />
