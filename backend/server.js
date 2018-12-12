@@ -39,19 +39,20 @@ mongodb.MongoClient.connect('mongodb://localhost/redux', function(err, db) {
         }
       });
     
-      app.put('/api/redux/:_id', (req, res) => {
+      app.put('/api/redux/', (req, res) => {
 
-
+       
         
      
         const { errors, isValid } = validate(req.body);
     
         if (isValid) {
           console.log('updated api call');
-          const { title } = req.body;
-          console.log('title',title);
+          console.log('id',req.body.id);
+          console.log('title',req.body.title);
+           const { id,title } = req.body;
           db.collection('redux').findOneAndUpdate(
-            { _id: req.params._id },
+            { _id: id },
             { $set: { title } },
             { returnOriginal: false },
             (err, result) => {

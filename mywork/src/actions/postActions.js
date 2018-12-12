@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { FETCH_POSTS, NEW_POST, DELETE_POST, FETCH_POST,UPDATE_POST} from './types';
+import { FETCH_POSTS, NEW_POST, DELETE_POST, FETCH_POST,UPDATE_POST,INPUT_TEXT_VALUE} from './types';
 //const url = 'http://localhost:4040/api/redux'
 
 
@@ -56,9 +56,13 @@ export const fetchPostsbyId = id => dispatch => {
   );
 };
 
-export const updateposts = id => dispatch => {
-  console.log("update data by id");
-  axios.put(`/api/redux/${id}`).then(res =>
+export const updateposts = (id,title) => dispatch => {
+  console.log("update data by id",id);
+  console.log("update data by id",title);
+  const post = {
+    id,title
+  }
+  axios.put(`/api/redux/`,post).then(res =>
     dispatch({
       type: UPDATE_POST,
       payload: id
@@ -66,3 +70,12 @@ export const updateposts = id => dispatch => {
   );
 };
 
+export const inputtextval = data => dispatch => {
+  console.log("inputtextval");
+ 
+    dispatch({
+      type: INPUT_TEXT_VALUE,
+      payload: data
+    })
+  
+};

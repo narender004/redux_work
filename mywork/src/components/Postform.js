@@ -1,22 +1,26 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { createPost ,fetchPostsbyId,updateposts} from '../actions/postActions';
+import { createPost ,fetchPostsbyId,updateposts,inputtextval} from '../actions/postActions';
 
 class PostForm extends Component {
   constructor(props) {
     console.log('props',props);
     super(props);
-    this.state = {
-      title: ''
-    };
+    // this.state = {
+    //   title: ''
+    // };
 
     this.onChange = this.onChange.bind(this);
     this.onSubmit = this.onSubmit.bind(this);
   }
 
   onChange(e) {
-   this.setState({ [e.target.name]: e.target.value });
+   
+    console.log('value',e.target.value);
+    const value = e.target.value;
+    this.props.inputtextval(value);
+   //this.setState({ [e.target.name]: e.target.value });
   }
 
   // componentDidUpdate() {
@@ -30,13 +34,13 @@ class PostForm extends Component {
 
 
 
-componentWillReceiveProps(nextProps) {
-console.log('ddddddddddddddddddddddd',nextProps.newPost.title);
-  if(nextProps.newPost.title !== '') {
-    console.log('welcome new value');
-    this.setState({title:nextProps.newPost.title })
-  }
-}
+// componentWillReceiveProps(nextProps) {
+// console.log('ddddddddddddddddddddddd',nextProps.newPost.title);
+//   if(nextProps.newPost.title !== '') {
+//     console.log('welcome new value');
+//     this.setState({title:nextProps.newPost.title })
+//   }
+// }
 
   onSubmit(e) {
     e.preventDefault();
@@ -46,7 +50,7 @@ console.log('ddddddddddddddddddddddd',nextProps.newPost.title);
         title: this.props.newPost.title
       };
       console.log('update post',post);
-    // this.props.updateposts(this.props.newPost._id,post);
+     this.props.updateposts(this.props.newPost._id,post);
   
     } else {
       post = {
@@ -69,7 +73,7 @@ console.log('ddddddddddddddddddddddd',nextProps.newPost.title);
               type="text"
               name="title"
               onChange={this.onChange}
-              value={this.state.title}
+              value={this.props.item}
             />
           </div>
           <br />
@@ -90,4 +94,4 @@ const mapStateToProps = state => (
   newPost: state.posts.item
 });
 
-export default connect(mapStateToProps, { createPost,fetchPostsbyId,updateposts})(PostForm);
+export default connect(mapStateToProps, { createPost,fetchPostsbyId,updateposts,inputtextval})(PostForm);

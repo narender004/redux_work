@@ -1,4 +1,4 @@
-import { FETCH_POSTS, NEW_POST, DELETE_POST,FETCH_POST,UPDATE_POST} from '../actions/types';
+import { FETCH_POSTS, NEW_POST, DELETE_POST,FETCH_POST,UPDATE_POST,INPUT_TEXT_VALUE} from '../actions/types';
 const initialState = {
   items: [],
   item: {},
@@ -49,6 +49,12 @@ export default function(state = initialState, action) {
       item:item
     };
     };  
+    case INPUT_TEXT_VALUE:
+    console.log('INPUT_TEXT_VALUE',action.payload);
+      return {
+        ...state,
+        item: action.payload
+      };
     default:
       return state;
   }
