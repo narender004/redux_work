@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { fetchPosts, deletePosts } from '../actions/postActions';
+import { fetchPosts, deletePosts,fetchPostsbyId } from '../actions/postActions';
 
 class Posts extends Component {
   componentWillMount() {
@@ -19,6 +19,10 @@ class Posts extends Component {
     this.props.deletePosts(id);
   };
 
+  onEditClick = id => {
+    console.log('id',id);
+   this.props.fetchPostsbyId(id);
+  };
 
   render() {
     const postItems = this.props.posts.map(post => (
@@ -26,7 +30,8 @@ class Posts extends Component {
        <h3>{post._id}</h3>
         <h3>{post.title}</h3>
         <p>{post.body}</p>
-        <span onClick={this.onDeleteClick.bind(this, post._id)}> Delete </span>        
+        <span onClick={this.onDeleteClick.bind(this, post._id)}> Delete </span>      
+        <span onClick={this.onEditClick.bind(this, post._id)}> Edit </span>  
       </div>
     ));
     return (
@@ -51,4 +56,4 @@ const mapStateToProps = state => (
  // newPost: state.posts.item
 });
 
-export default connect(mapStateToProps, { fetchPosts,deletePosts })(Posts);
+export default connect(mapStateToProps, { fetchPosts,deletePosts,fetchPostsbyId })(Posts);

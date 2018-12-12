@@ -1,10 +1,11 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { createPost } from '../actions/postActions';
+import { createPost ,fetchPostsbyId,updateposts} from '../actions/postActions';
 
 class PostForm extends Component {
   constructor(props) {
+    console.log('props',props);
     super(props);
     this.state = {
       title: ''
@@ -15,17 +16,45 @@ class PostForm extends Component {
   }
 
   onChange(e) {
-    this.setState({ [e.target.name]: e.target.value });
+   this.setState({ [e.target.name]: e.target.value });
   }
+
+  // componentDidUpdate() {
+  //   const newProps = this.props
+  //   console.log('newProps',newProps);
+  //   console.log('newProps title' ,newProps.newPost.title);
+  //  // this.setState({ title: newProps.newPost.title})
+    
+  // }
+
+
+
+
+componentWillReceiveProps(nextProps) {
+console.log('ddddddddddddddddddddddd',nextProps.newPost.title);
+  if(nextProps.newPost.title !== '') {
+    console.log('welcome new value');
+    this.setState({title:nextProps.newPost.title })
+  }
+}
 
   onSubmit(e) {
     e.preventDefault();
-
-    const post = {
-      title: this.state.title
-    };
-
-    this.props.createPost(post);
+    let post;
+    if(this.props.newPost._id) {
+      post = {
+        title: this.props.newPost.title
+      };
+      console.log('update post',post);
+    // this.props.updateposts(this.props.newPost._id,post);
+  
+    } else {
+      post = {
+        title: this.state.title
+      };
+      this.props.createPost(post);
+    }
+   
   }
 
   render() {
@@ -55,4 +84,10 @@ PostForm.propTypes = {
   createPost: PropTypes.func.isRequired
 };
 
-export default connect(null, { createPost })(PostForm);
+const mapStateToProps = state => (
+  console.log('state',state),
+  {
+  newPost: state.posts.item
+});
+
+export default connect(mapStateToProps, { createPost,fetchPostsbyId,updateposts})(PostForm);

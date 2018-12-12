@@ -1,8 +1,8 @@
-import { FETCH_POSTS, NEW_POST, DELETE_POST } from '../actions/types';
-
+import { FETCH_POSTS, NEW_POST, DELETE_POST,FETCH_POST,UPDATE_POST} from '../actions/types';
 const initialState = {
   items: [],
-  item: {}
+  item: {},
+  
 };
 
 export default function(state = initialState, action) {
@@ -25,6 +25,30 @@ export default function(state = initialState, action) {
           ...state,
      items: state.items.filter(item => item._id !== action.payload)
         };
+        case FETCH_POST: {
+      console.log('action id',action.payload);
+      console.log('items data',state.items);
+     let item = state.items.find((itemdata) => {
+      return (action.payload === itemdata._id) 
+     });
+     console.log('item',item)
+     return {
+      ...state,
+      item:item
+    };
+    };
+    case UPDATE_POST: {
+      console.log('UPDATE_POST action id',action.payload);
+      console.log('UPDATE_POST items data',state.items);
+     let item = state.items.find((itemdata) => {
+      return (action.payload === itemdata._id) 
+     });
+     console.log('item',item)
+     return {
+      ...state,
+      item:item
+    };
+    };  
     default:
       return state;
   }
